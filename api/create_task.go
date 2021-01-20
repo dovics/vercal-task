@@ -1,20 +1,35 @@
-package handler
+package api
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/my-Sakura/go-yuque-api/api"
 )
 
+// TOKEN -
+var TOKEN string
+
+// NAMESPACE -
+var NAMESPACE string
+
+func init() {
+	TOKEN = os.Getenv("TOKEN")
+	NAMESPACE = os.Getenv("NAMESPACE")
+}
+
 // CreateTask -
 func CreateTask(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		w.WriteHeader(404)
+		return
+	}
+
 	var reqBody struct {
-		Token     string `json:"token"`
-		Namespace string `json:"namespace"`
-		Title     string `json:"title"`
-		Slug      string `json:"slug"`
+		Title string `json:"title"`
+		Slug  string `json:"slug"`
 	}
 
 	body, _ := ioutil.ReadAll(r.Body)
@@ -24,7 +39,7 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	doc := api.CreateDocument(reqBody.Token, reqBody.Namespace, reqBody.Slug, reqBody.Title)
+	doc := api.CreateDocument(TOKEN, NAMESPACE, reqBody.Slug, reqBody.Title)
 
 	resBody, err := json.Marshal(doc.Data)
 	if err != nil {

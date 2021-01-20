@@ -1,4 +1,4 @@
-package handler
+package api
 
 import (
 	"encoding/json"
@@ -10,10 +10,13 @@ import (
 
 // DeleteTask -
 func DeleteTask(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		w.WriteHeader(404)
+		return
+	}
+
 	var reqBody struct {
-		Token     string `json:"token"`
-		Namespace string `json:"namespace"`
-		DocID     int    `json:"doc_id"`
+		DocID int `json:"doc_id"`
 	}
 
 	body, _ := ioutil.ReadAll(r.Body)
@@ -23,6 +26,6 @@ func DeleteTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	api.DeleteDocument(reqBody.Token, reqBody.Namespace, reqBody.DocID)
+	api.DeleteDocument(TOKEN, NAMESPACE, reqBody.DocID)
 	w.WriteHeader(200)
 }

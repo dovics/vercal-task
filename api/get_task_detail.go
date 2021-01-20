@@ -1,8 +1,7 @@
-package handler
+package api
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"net/http"
 
 	"github.com/my-Sakura/go-yuque-api/api"
@@ -10,20 +9,19 @@ import (
 
 // GetTaskDetail -
 func GetTaskDetail(w http.ResponseWriter, r *http.Request) {
-	var reqBody struct {
-		Token     string `json:"token"`
-		Namespace string `json:"namespace"`
-		Slug      string `json:"slug"`
-	}
-
-	body, _ := ioutil.ReadAll(r.Body)
-	err := json.Unmarshal(body, &reqBody)
-	if err != nil {
-		w.WriteHeader(400)
+	if r.Method != "GET" {
+		w.WriteHeader(404)
 		return
 	}
 
-	doc := api.GetDocumentInfo(reqBody.Token, reqBody.Namespace, reqBody.Slug)
+	values := r.URL.Query()
+	Slug, ok := values["slug"]
+	if !ok || len(Slug) == 0 {
+		w.WriteHeader(404)
+		return
+	}
+
+	doc := api.GetDocumentInfo(TOKEN, NAMESPACE, Slug[0])
 
 	resBody, err := json.Marshal(doc.Data)
 	if err != nil {
