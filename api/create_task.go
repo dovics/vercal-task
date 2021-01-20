@@ -15,9 +15,13 @@ var TOKEN string
 // NAMESPACE -
 var NAMESPACE string
 
+// SESSION -
+var SESSION string
+
 func init() {
 	TOKEN = os.Getenv("TOKEN")
 	NAMESPACE = os.Getenv("NAMESPACE")
+	SESSION = os.Getenv("SESSION")
 }
 
 // CreateTask -

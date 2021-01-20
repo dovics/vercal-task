@@ -7,8 +7,8 @@ import (
 	"github.com/my-Sakura/go-yuque-api/api"
 )
 
-// GetTaskDetail -
-func GetTaskDetail(w http.ResponseWriter, r *http.Request) {
+// GetTaskInfo -
+func GetTaskInfo(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		w.WriteHeader(404)
 		return

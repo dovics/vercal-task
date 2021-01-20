@@ -2,13 +2,20 @@ package service
 
 import "time"
 
-type ResponseCommentSerializer struct {
+// ResponseCommentInfoSerializer -
+type ResponseCommentInfoSerializer struct {
 	Meta struct {
-		ActiveReview interface{} `json:"activeReview"`
+		ActiveReview string `json:"activeReview"`
 	} `json:"meta"`
 	Data []CommentSerializer `json:"data"`
 }
 
+// ResponseAddCommentSerializer -
+type ResponseAddCommentSerializer struct {
+	Data CommentSerializer
+}
+
+// CommentSerializer -
 type CommentSerializer struct {
 	ID     int `json:"id"`
 	UserID int `json:"user_id"`
@@ -22,20 +29,20 @@ type CommentSerializer struct {
 		IsPaid         bool   `json:"isPaid"`
 		Serializer     string `json:"_serializer"`
 	} `json:"user"`
-	ParentID      interface{}   `json:"parent_id"`
-	Format        string        `json:"format"`
-	BodyAsl       string        `json:"body_asl"`
-	LikesCount    int           `json:"likes_count"`
-	Mood          int           `json:"mood"`
-	CreatedAt     time.Time     `json:"created_at"`
-	UpdatedAt     time.Time     `json:"updated_at"`
-	Status        int           `json:"status"`
-	ToUserID      interface{}   `json:"to_user_id"`
-	Type          interface{}   `json:"type"`
-	SelectionID   interface{}   `json:"selection_id"`
-	SelectionType interface{}   `json:"selection_type"`
-	Reactions     []interface{} `json:"reactions"`
-	SourceType    interface{}   `json:"source_type"`
-	SourceID      interface{}   `json:"source_id"`
-	Serializer    string        `json:"_serializer"`
+	ParentID      string    `json:"parent_id"`
+	Format        string    `json:"format"`
+	BodyAsl       string    `json:"body_asl"`
+	LikesCount    int       `json:"likes_count"`
+	Mood          int       `json:"mood"`
+	CreatedAt     time.Time `json:"created_at"`
+	UpdatedAt     time.Time `json:"updated_at"`
+	Status        int       `json:"status"`
+	ToUserID      string    `json:"to_user_id"`
+	Type          string    `json:"type"`
+	SelectionID   string    `json:"selection_id"`
+	SelectionType string    `json:"selection_type"`
+	Reactions     []string  `json:"reactions"`
+	SourceType    string    `json:"source_type"`
+	SourceID      string    `json:"source_id"`
+	Serializer    string    `json:"_serializer"`
 }
